@@ -94,6 +94,7 @@ class _AddNewCourseState extends State<AddNewCourse> {
             ),
             ElevatedButton(
                 onPressed: () {
+                  Navigator.pop(context);
                   writeData();
                 },
                 child: Text("Add Course"))
