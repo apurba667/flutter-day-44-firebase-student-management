@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebasestm/addNewCourse.dart';
+import 'package:firebasestm/update.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -33,6 +34,16 @@ class _HomePageState extends State<HomePage> {
         .delete()
         .then((value) => print("Data has been deleted!"))
         .catchError((e) => print(e));
+  }
+
+  Future<void> editCourse(selectDocument, courseName, courseFee, courseImg) {
+    return showModalBottomSheet(
+        backgroundColor: Colors.transparent,
+        isDismissible: true,
+        isScrollControlled: true,
+        context: context,
+        builder: (context) =>
+            UpdateCourse(selectDocument, courseName, courseFee, courseImg));
   }
 
   @override
@@ -104,7 +115,14 @@ class _HomePageState extends State<HomePage> {
                             child: Row(
                               children: [
                                 IconButton(
-                                    onPressed: () {}, icon: Icon(Icons.edit)),
+                                    onPressed: () {
+                                      editCourse(
+                                          document.id,
+                                          data["course_name"],
+                                          data["course_fee"],
+                                          data["img"]);
+                                    },
+                                    icon: Icon(Icons.edit)),
                                 IconButton(
                                     onPressed: () {
                                       deleteCourse(document.id);
